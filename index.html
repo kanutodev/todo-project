@@ -1,0 +1,215 @@
+<!--
+ =========================================================
+ * Material Kit - v2.0.6
+ =========================================================
+
+ * Product Page: https://www.creative-tim.com/product/material-kit
+ * Copyright 2019 Creative Tim (http://www.creative-tim.com)
+   Licensed under MIT (https://github.com/creativetimofficial/material-kit/blob/master/LICENSE.md)
+
+
+ =========================================================
+
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Javscript DOM Manipulation
+  </title>
+
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- CSS Files -->
+  <link href="./assets/css/material-kit.css?v=2.0.6" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+
+
+<style>
+
+  body{
+    overflow: hidden;
+  }
+
+  .wrapper {
+    margin: auto;
+    margin-top: 2%;
+    width: 40%;
+    border: 1px solid #ccc;
+    height: 30rem;
+  }
+
+  h1 {
+       margin-top: 2%;
+  }
+
+  .heading-center {
+    text-align: center;
+  }
+
+  .marg-top-3 {
+    margin-top: 2rem;"
+  }
+
+  .TextToDo {
+    height: 4rem; 
+    font-size: 1.5rem
+  }
+.done{
+    color: #fff; 
+    background: black;
+    opacity: .5;
+    text-decoration-line: line-through;
+ }
+
+
+</style>
+</head>
+
+<body class="index-page sidebar-collapse">
+  <div class="container">
+    
+  <div class="heading-center">
+    <h1 class="head">To Do's</h1>
+  </div>
+
+  <div class="wrapper">
+
+    <div class="col col-lg-12">
+      
+      <!-- //INPUT TEXT -->
+      <input type="text" name="TxtToDo"id="todoTxt" class="TextToDo form-control marg-top-3" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" placeholder="Please insert  text">
+
+      <!-- //SUBMIT BUTTON -->
+      <input type="submit" name="btnSubmit" id="submitBtn" class="SubmitButton btn btn-primary btn-lg w-100" value="save" onclick="buttonSubmit()">
+      <input type="submit" name="btnSubmit" id="DelBtn" class="SubmitButton btn btn-primary btn-lg w-100" value="Clear all" onclick="clearall()">
+
+          <div>
+            <h5>List Of To Do's</h5>
+          </div>
+      <div class="table-responsive-xl marg-top-3">
+        <table id="todoTbl" class="TableTodo">
+          </table>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+
+
+
+  </div>
+  <script>
+// type="text" name="TxtToDo"id="todoTxt" class="TextToDo
+
+//type="submit" name="btnSubmit" id="submitBtn" class="SubmitButton
+
+//id="todoTbl" class="TableTodo"
+    ///SAVE
+    //var butttonSubmit = document.getElementById("submitBtn");
+    // const valEdit = document.getElementById("todoTxt");
+    var todoText = document.getElementById("todoTxt");
+    var tableToDo = document.getElementById("todoTbl");
+
+
+  // let i = 0;
+  // while (i <= 10) {
+  //  console.log(`While loop ang value ay ${i}`);
+  //  i++;
+  // }
+
+
+
+      // butttonSubmit.addEventListener("click", function(){
+      function buttonSubmit(){
+        if(todoText.value.trim().length != 0){
+          // var newTodo = document.createElement("input");
+          // newTodo.setAttribute("type", "text");
+          var newtr = document.createElement('tr');
+
+          newtr.innerHTML = "<div class='d-flex flex-wrap'><tr class=''>\
+          <td class=''><input type='checkbox'id='ckbox' class=''onclick='ckbox()' value='Done'></td>\
+          <td class=''><h4 ondblclick='funcEdit(this.id)' class='ListItem' name='listitem' id="+todoText.value+">"+todoText.value+"</h4></td>\
+          <td class=''><input type='button' onclick='funcEdit(this.id)'value='edit bitch' id="+todoText.value+" class= 'btn btn-warning btn-sm w-100' name='editTagname'></td><td class=''><input type='button' name='btndel' id='btnDel' value='Delete' onclick='btnDel()' class= 'btn btn-danger btn-sm w-100'></td></div>\
+        </tr>";
+          // newtr.id = todoTxt.value;
+          tableToDo.appendChild(newtr);
+          // newTodo.value = todoTxt.value;
+          // newtr.appendChild(newTodo);
+          // var valEdit = todoTxt.value;
+          // console.log(valEdit);
+          todoText.value = "";
+        }
+    };
+
+    //edit
+// function myFunction() {
+//   document.getElementById("demo").innerHTML = "Hello World";
+// }
+
+  function funcEdit(val) {
+    todoText.value = val;
+    btnDel();
+    document.getElementsByTagName("editTagname").disabled = true;
+
+  };
+
+function btnDel() {
+      // event.target will be the input element.
+      var td = event.target.parentNode; 
+      var tr = td.parentNode; // the row to be removed
+      tr.parentNode.removeChild(tr);
+};
+ function clearall() {
+        var e = document.querySelector("table"); 
+        //e.firstElementChild can be used. 
+        var child = e.lastElementChild;  
+        while (child) { 
+            e.removeChild(child); 
+            child = e.lastElementChild; 
+        }; 
+    }
+
+
+todoText.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   buttonSubmit();
+   //document.getElementById("submitBtn").click();
+  }
+});
+
+  // function saveKey(event){
+  //   if(event.keyCode == 13){
+  //     buttonSubmit();
+  //   } else{
+  //     event.preventDefault();
+  //   }
+  // };
+// .classList.toggle("newClassName");
+function ckbox() {
+      var checkBox = document.getElementById("ckbox");
+      var td = event.target.parentNode; 
+      var tr = td.parentNode; // the row to be removed
+    tr.classList.toggle("done");
+
+  
+}
+// const div1 = document.getElementsByTagName('button');
+// const align = div1.getAttribute('align');
+// // var x = document.getElementsByTagName("tr")[0].getAttribute("id"); 
+
+// conlose.log(id);
+
+  </script>
+
+</html>
